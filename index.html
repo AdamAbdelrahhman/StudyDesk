@@ -71,6 +71,15 @@ body{perspective:1200px;overflow-x:hidden}
 @media(max-width:700px){.geo{opacity:.25}.geo.cube{width:55px;height:55px}.geo.ring{width:90px;height:90px}.geo.grid{width:110px;height:110px}.panel:hover,.stat:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
+
+/* StudyDesk AI assistant */
+.ai-launch{position:fixed;right:24px;bottom:24px;z-index:1000;border:0;border-radius:999px;padding:13px 18px;color:#fff;font-weight:800;background:linear-gradient(110deg,#7c3aed,#a855f7 55%,#0ea5e9);box-shadow:0 12px 35px #7c3aed66;display:flex;align-items:center;gap:10px}
+.ai-launch .ai-spark{font-size:20px}.ai-panel{position:fixed;right:24px;bottom:88px;z-index:1001;width:min(410px,calc(100vw - 24px));height:min(620px,calc(100dvh - 115px));display:none;flex-direction:column;overflow:hidden;border:1px solid var(--line);border-radius:22px;background:var(--panel);box-shadow:0 25px 90px #0009;backdrop-filter:blur(20px)}
+.ai-panel.open{display:flex}.ai-head{padding:15px 16px;background:linear-gradient(110deg,#7c3aed22,#0ea5e922);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ai-brand{display:flex;align-items:center;gap:10px}.ai-avatar{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#0ea5e9);color:#fff;font-size:19px}.ai-head strong{display:block}.ai-head small{color:var(--muted);font-size:11px}.ai-close{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:7px 10px;color:var(--text)}
+.ai-messages{flex:1;overflow:auto;padding:15px;display:flex;flex-direction:column;gap:12px}.ai-msg{max-width:90%;padding:11px 13px;border-radius:15px;background:var(--panel2);border:1px solid var(--line);white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.65}.ai-msg.user{align-self:flex-end;background:linear-gradient(130deg,#6d28d9,#4f46e5);color:white;border:0}.ai-msg.assistant{align-self:flex-start}.ai-msg.error{border-color:#fb718566;color:var(--red)}.ai-typing{color:var(--muted);font-size:12px;padding:2px 4px}.ai-suggestions{padding:0 14px 10px;display:flex;gap:7px;overflow:auto}.ai-suggestions button{white-space:nowrap;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:20px;padding:7px 10px;font-size:11px}
+.ai-compose{border-top:1px solid var(--line);padding:12px;display:flex;gap:8px;align-items:end}.ai-compose textarea{resize:none;max-height:110px;min-height:44px;flex:1;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:13px;padding:11px;outline:none}.ai-send{border:0;border-radius:12px;padding:11px 14px;color:white;font-weight:800;background:linear-gradient(120deg,#7c3aed,#0ea5e9)}.ai-send:disabled{opacity:.5;cursor:not-allowed}.ai-foot{padding:0 13px 10px;color:var(--muted);font-size:10px;text-align:center}
+@media(max-width:600px){.ai-launch{right:14px;bottom:14px}.ai-panel{right:8px;bottom:76px;width:calc(100vw - 16px);height:min(72dvh,620px)}}
 </style></head>
 <body>
 <div id="motion-world" aria-hidden="true">
@@ -129,6 +138,15 @@ body{perspective:1200px;overflow-x:hidden}
 <section id="v-notes" hidden><div class="page-head"><div><div class="eyebrow">YOUR KNOWLEDGE</div><h1 data-i="notes">Smart notes</h1><p data-i="notecopy">Keep your important ideas in one place.</p></div></div><div class="content-grid"><div class="panel"><h2 data-i="writeNote">Write a note</h2><div class="field" style="margin:12px 0"><label data-i="subject">SUBJECT</label><input id="ns" list="subs" placeholder="Subject name"></div><textarea id="nt" rows="13" placeholder="Start writing. Your notes save automatically..."></textarea><small class="muted" id="saved-label">Saved locally</small></div><div class="panel"><h2 data-i="savedNotes">Saved notes</h2><div class="note-list" id="nl"></div></div></div></section>
 <footer class="muted" style="text-align:center;padding:22px;font-size:11px">StudyDesk · Learn · Plan · Achieve</footer>
 </main></div></section>
+
+<button class="ai-launch" id="ai-launch" type="button" aria-label="Open StudyDesk AI"><span class="ai-spark">✦</span><span>StudyDesk AI</span></button>
+<aside class="ai-panel" id="ai-panel" aria-label="StudyDesk AI Assistant">
+ <div class="ai-head"><div class="ai-brand"><div class="ai-avatar">✦</div><div><strong>StudyDesk AI</strong><small id="ai-status">Your personal study assistant</small></div></div><button class="ai-close" id="ai-close" type="button" aria-label="Close assistant">✕</button></div>
+ <div class="ai-messages" id="ai-messages" aria-live="polite"><div class="ai-msg assistant" id="ai-welcome">Hi! I'm your StudyDesk assistant. Ask me to explain a lesson, make a quiz, or plan your study day.</div></div>
+ <div class="ai-suggestions" id="ai-suggestions"><button type="button">Make a study plan</button><button type="button">Quiz me</button><button type="button">Summarize my notes</button></div>
+ <form class="ai-compose" id="ai-form"><textarea id="ai-input" rows="1" maxlength="2000" placeholder="Ask StudyDesk AI..." aria-label="Message"></textarea><button class="ai-send" id="ai-send" type="submit">➤</button></form>
+ <div class="ai-foot">Your study data is shared with Gemini only when you send a message.</div>
+</aside>
 <script>
 const $=s=>document.querySelector(s), mem={};const get=(k,d)=>{try{let v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return mem[k]??d}},put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{mem[k]=v}};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -186,4 +204,25 @@ setInterval(()=>{if(!me)return;let now=Date.now(),changed=false;D.tasks.forEach(
 
 // Subtle pointer gravity: background objects drift toward/away from the cursor.
 (()=>{const world=document.getElementById('motion-world');if(!world||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const shapes=[...world.querySelectorAll('.geo')];let tx=0,ty=0,x=0,y=0,raf=0;function move(e){tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;if(!raf)raf=requestAnimationFrame(tick)}function tick(){x+=(tx-x)*.055;y+=(ty-y)*.055;shapes.forEach((el,i)=>{const d=(i%3+1)*9;el.style.marginLeft=(x*d)+'px';el.style.marginTop=(y*d)+'px';});raf=0;if(Math.abs(tx-x)+Math.abs(ty-y)>.002)raf=requestAnimationFrame(tick)}addEventListener('pointermove',move,{passive:true});addEventListener('pointerleave',()=>{tx=0;ty=0;move({clientX:innerWidth/2,clientY:innerHeight/2})},{passive:true});})();
+
+// === StudyDesk AI · Gemini managed backend ===
+const STUDYDESK_AI_API = window.STUDYDESK_AI_API || 'https://YOUR-VERCEL-PROJECT.vercel.app/api/chat';
+const aiPanel=document.getElementById('ai-panel'),aiMessages=document.getElementById('ai-messages'),aiInput=document.getElementById('ai-input'),aiForm=document.getElementById('ai-form'),aiSend=document.getElementById('ai-send');
+let aiHistory=[];
+function aiStoreKey(){return 'sd_ai_chat_'+String(me||'guest').replace(/[^a-z0-9_-]/gi,'_')}
+function aiLoadHistory(){try{aiHistory=JSON.parse(localStorage.getItem(aiStoreKey())||'[]');if(!Array.isArray(aiHistory))aiHistory=[]}catch{aiHistory=[]}aiRenderHistory()}
+function aiSaveHistory(){try{localStorage.setItem(aiStoreKey(),JSON.stringify(aiHistory.slice(-30)))}catch{}}
+function aiRenderHistory(){const welcome=lang==='ar'?'أهلاً! أنا مساعد StudyDesk. اسألني عن شرح درس أو اختبار أو خطة مذاكرة.':'Hi! I\'m your StudyDesk assistant. Ask me to explain a lesson, make a quiz, or plan your study day.';aiMessages.innerHTML='';const items=aiHistory.length?aiHistory:[{role:'assistant',text:welcome}];items.forEach(m=>{const el=document.createElement('div');el.className='ai-msg '+(m.role==='user'?'user':'assistant');el.textContent=m.text;aiMessages.appendChild(el)});aiMessages.scrollTop=aiMessages.scrollHeight}
+function aiAddMessage(role,text,save=true){const el=document.createElement('div');el.className='ai-msg '+role;el.textContent=text;aiMessages.appendChild(el);aiMessages.scrollTop=aiMessages.scrollHeight;if(save){aiHistory.push({role:role==='user'?'user':'assistant',text});aiHistory=aiHistory.slice(-30);aiSaveHistory()}}
+function aiStudyContext(){if(!me||!D)return{};return{student:me,language:lang==='ar'?'Arabic':'English',goalMinutes:D.goal||60,tasks:(D.tasks||[]).slice(0,80).map(t=>({title:t.title,subject:t.subject,due:t.due?new Date(t.due).toISOString():null,done:!!t.done,priority:t.pri||2,notes:t.notes||''})),exams:(D.exams||[]).slice(0,30),notes:Object.entries(D.notes||{}).slice(0,25).map(([subject,note])=>({subject,note:String(note).slice(0,1800)})),flashcards:(D.cards||[]).slice(0,30).map(c=>({subject:c.subject,question:c.q,answer:c.a})),focusMinutes:D.focus||{}}}
+function aiOpen(){if(!me){aiAddMessage('assistant',lang==='ar'?'سجّل الدخول الأول علشان أقدر أساعدك ببيانات مذاكرتك.':'Please sign in first so I can help with your study data.',false)}else aiLoadHistory();aiPanel.classList.add('open');aiInput.focus()}
+document.getElementById('ai-launch').addEventListener('click',()=>{if(aiPanel.classList.contains('open'))aiPanel.classList.remove('open');else aiOpen()});
+document.getElementById('ai-close').addEventListener('click',()=>aiPanel.classList.remove('open'));
+document.getElementById('ai-suggestions').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;aiInput.value=b.textContent;aiForm.requestSubmit()});
+aiInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiForm.requestSubmit()}});
+aiForm.addEventListener('submit',async e=>{e.preventDefault();const message=aiInput.value.trim();if(!message||aiSend.disabled)return;if(!me){aiAddMessage('assistant',lang==='ar'?'سجّل الدخول الأول.':'Please sign in first.',false);return}
+if(STUDYDESK_AI_API.includes('YOUR-VERCEL-PROJECT')){aiAddMessage('assistant',lang==='ar'?'الواجهة جاهزة، لكن لازم نربط رابط Backend المنشور على Vercel ونضيف GEMINI_API_KEY في إعداداته.':'The assistant UI is ready, but the deployed Vercel backend URL and GEMINI_API_KEY still need to be configured.');return}
+aiInput.value='';aiAddMessage('user',message);aiSend.disabled=true;const typing=document.createElement('div');typing.className='ai-typing';typing.textContent=lang==='ar'?'جاري التفكير…':'Thinking…';aiMessages.appendChild(typing);aiMessages.scrollTop=aiMessages.scrollHeight;
+try{const response=await fetch(STUDYDESK_AI_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,history:aiHistory.filter(x=>x.role==='user'||x.role==='assistant').slice(-12,-1),context:aiStudyContext()})});let data={};try{data=await response.json()}catch{}if(!response.ok)throw new Error(data.error||('Request failed ('+response.status+')'));const answer=String(data.reply||'').trim();if(!answer)throw new Error('Gemini returned an empty response.');typing.remove();aiAddMessage('assistant',answer)}catch(err){typing.remove();aiAddMessage('assistant',(lang==='ar'?'حصلت مشكلة: ':'Something went wrong: ')+(err.message||'Please try again.'));}finally{aiSend.disabled=false;aiInput.focus()}
+});
 </script></body></html>
