@@ -32,7 +32,10 @@ module.exports=async function handler(req,res){
    content:m.role==='model'?[{type:'text',text:m.parts.map(p=>p.text||'').join(' ').slice(0,3000)}]:m.parts.map(p=>({type:'text',text:p.text||''}))
   }));
   interactionInput.push({type:'user_input',content:[{type:'text',text:message}]});
-  const upstream=await fetch('https://generativelanguage.googleapis.com/v1beta/interactions',{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({model:'gemini-3.8-flash',store:false,system_instruction:systemInstruction.parts[0].text,input:interactionInput,generation_config:{temperature:0.65,max_output_tokens:1400}})});
+  const requestModel=async(model)=>fetch('https://generativelanguage.googleapis.com/v1beta/interactions',{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({model,store:false,system_instruction:systemInstruction.parts[0].text,input:interactionInput,generation_config:{temperature:0.65,max_output_tokens:1400}})});
+  let upstream=await requestModel('gemini-3.8-flash');
+  // Temporary capacity spikes can affect a model; automatically try the lighter stable model.
+  if(upstream.status===429||upstream.status===503)upstream=await requestModel('gemini-3.5-flash-lite');
   const result=await upstream.json();
   if(!upstream.ok){const msg=result.error&&result.error.message?result.error.message:'Gemini request failed.';return send(res,upstream.status===429?429:502,{error:msg});}
   const reply=(result.steps||[]).filter(step=>step.type==='model_output').flatMap(step=>step.content||[]).filter(part=>part.type==='text').map(part=>part.text||'').join('').trim();
