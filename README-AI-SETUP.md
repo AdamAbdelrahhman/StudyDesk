@@ -1,6 +1,6 @@
 # StudyDesk AI setup (Gemini + Vercel)
 
-The GitHub Pages site is static, so it cannot safely store a Gemini API key or run the AI endpoint. This repository includes a Vercel serverless function at `api/chat.js`.
+The GitHub Pages site is static, so it cannot safely store a Gemini Interactions API key or run the AI endpoint. This repository includes a Vercel serverless function at `api/chat.js`.
 
 ## Deploy the managed backend
 
