@@ -80,6 +80,54 @@ body{perspective:1200px;overflow-x:hidden}
 .ai-messages{flex:1;overflow:auto;padding:15px;display:flex;flex-direction:column;gap:12px}.ai-msg{max-width:90%;padding:11px 13px;border-radius:15px;background:var(--panel2);border:1px solid var(--line);white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.65}.ai-msg.user{align-self:flex-end;background:linear-gradient(130deg,#6d28d9,#4f46e5);color:white;border:0}.ai-msg.assistant{align-self:flex-start}.ai-msg.error{border-color:#fb718566;color:var(--red)}.ai-typing{color:var(--muted);font-size:12px;padding:2px 4px}.ai-suggestions{padding:0 14px 10px;display:flex;gap:7px;overflow:auto}.ai-suggestions button{white-space:nowrap;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:20px;padding:7px 10px;font-size:11px}
 .ai-compose{border-top:1px solid var(--line);padding:12px;display:flex;gap:8px;align-items:end}.ai-compose textarea{resize:none;max-height:110px;min-height:44px;flex:1;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:13px;padding:11px;outline:none}.ai-send{border:0;border-radius:12px;padding:11px 14px;color:white;font-weight:800;background:linear-gradient(120deg,#7c3aed,#0ea5e9)}.ai-send:disabled{opacity:.5;cursor:not-allowed}.ai-foot{padding:0 13px 10px;color:var(--muted);font-size:10px;text-align:center}
 @media(max-width:600px){.ai-launch{right:14px;bottom:14px}.ai-panel{right:8px;bottom:76px;width:calc(100vw - 16px);height:min(72dvh,620px)}}
+
+/* Mobile fit: compact controls and navigation without shrinking readable text */
+@media (max-width:650px){
+  .app-shell{padding:8px;gap:9px}
+  .sidebar{padding:10px;gap:9px}
+  .sidebar nav{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;width:100%;overflow:visible;padding:0}
+  .sidebar nav button{min-width:0;width:100%;min-height:42px;padding:7px 2px;justify-content:center;border-radius:11px}
+  .sidebar nav button>span:not(.nav-icon){display:none}
+  .nav-icon{width:auto;font-size:19px;line-height:1}
+  .brand{gap:8px}
+  .brand-mark{width:32px;height:32px;border-radius:11px;font-size:18px}
+  .topbar{flex-direction:row;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 11px;margin-bottom:13px}
+  .welcome{flex:1 1 112px;min-width:0}
+  .welcome small{font-size:10px}
+  .welcome strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .top-actions{width:auto;flex:0 1 auto;gap:5px;flex-wrap:nowrap}
+  .top-actions>.icon-btn{flex:0 0 34px;width:34px;height:34px;min-width:34px;padding:0;display:grid;place-items:center;border-radius:10px;font-size:14px}
+  #bkb span{display:none}
+  #out{font-size:0}
+  #out:before{content:"↪";font-size:17px}
+  #lng{font-size:11px!important}
+  .page-head{gap:8px;margin:5px 0 13px}
+  .page-head h1{font-size:clamp(26px,4vw,36px)}
+  .stats-grid{gap:7px;margin-bottom:12px}
+  .stat{padding:11px;border-radius:14px}
+  .stat .symbol{font-size:18px}
+  .panel{padding:12px;border-radius:16px;margin-bottom:11px}
+  .panel-head{gap:7px;margin-bottom:11px}
+  .calendar{gap:3px}
+  .calendar button{min-height:46px;padding:4px;border-radius:9px}
+  .task{gap:8px;padding:10px 0}
+  .task-actions{gap:4px}
+  .ai-launch{right:10px;bottom:10px;padding:10px 13px;gap:7px}
+}
+@media (max-width:380px){
+  .app-shell{padding:6px}
+  .sidebar{padding:8px}
+  .sidebar nav{gap:3px}
+  .sidebar nav button{min-height:39px}
+  .nav-icon{font-size:18px}
+  .topbar{padding:9px}
+  .top-actions{gap:3px}
+  .top-actions>.icon-btn{flex-basis:32px;width:32px;height:32px;min-width:32px}
+  .stat{padding:9px}
+  .stat .label{font-size:11px}
+  .stat strong{font-size:24px}
+}
+
 </style></head>
 <body>
 <div id="motion-world" aria-hidden="true">
