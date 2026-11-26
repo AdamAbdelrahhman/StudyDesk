@@ -206,7 +206,7 @@ setInterval(()=>{if(!me)return;let now=Date.now(),changed=false;D.tasks.forEach(
 (()=>{const world=document.getElementById('motion-world');if(!world||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const shapes=[...world.querySelectorAll('.geo')];let tx=0,ty=0,x=0,y=0,raf=0;function move(e){tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;if(!raf)raf=requestAnimationFrame(tick)}function tick(){x+=(tx-x)*.055;y+=(ty-y)*.055;shapes.forEach((el,i)=>{const d=(i%3+1)*9;el.style.marginLeft=(x*d)+'px';el.style.marginTop=(y*d)+'px';});raf=0;if(Math.abs(tx-x)+Math.abs(ty-y)>.002)raf=requestAnimationFrame(tick)}addEventListener('pointermove',move,{passive:true});addEventListener('pointerleave',()=>{tx=0;ty=0;move({clientX:innerWidth/2,clientY:innerHeight/2})},{passive:true});})();
 
 // === StudyDesk AI · Gemini managed backend ===
-const STUDYDESK_AI_API = window.STUDYDESK_AI_API || 'https://YOUR-VERCEL-PROJECT.vercel.app/api/chat';
+const STUDYDESK_AI_API = window.STUDYDESK_AI_API || 'https://studydesk-ai-zeta.vercel.app/api/chat';
 const aiPanel=document.getElementById('ai-panel'),aiMessages=document.getElementById('ai-messages'),aiInput=document.getElementById('ai-input'),aiForm=document.getElementById('ai-form'),aiSend=document.getElementById('ai-send');
 let aiHistory=[];
 function aiStoreKey(){return 'sd_ai_chat_'+String(me||'guest').replace(/[^a-z0-9_-]/gi,'_')}
