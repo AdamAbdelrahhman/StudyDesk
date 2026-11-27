@@ -1,0 +1,30 @@
+name: Build StudyDesk RAG index
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  index-curriculum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out StudyDesk
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Index official curriculum PDFs in Gemini File Search
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::Add a repository Actions secret named GEMINI_API_KEY first."
+            exit 1
+          fi
+          node scripts/ingest-rag.js
