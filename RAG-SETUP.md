@@ -4,17 +4,16 @@
 StudyDesk uses Gemini File Search as a managed Retrieval-Augmented Generation (RAG) index. Gemini handles PDF ingestion, chunking, embeddings, semantic retrieval, and grounding. The API uses the store only for curriculum questions and returns any source annotations that Gemini provides.
 
 ## One-time indexing (16 official PDFs)
-1. Install Node.js 18 or newer.
-2. In a terminal, set `GEMINI_API_KEY` to the same Gemini key used by the Vercel backend. Do not paste the key into GitHub or the browser.
-3. Run:
-   ```bash
-   node scripts/ingest-rag.js
-   ```
-4. The script downloads and validates each PDF from the official Ministry content host, creates a Gemini File Search store, and indexes the PDFs. It prints the store name.
-5. In Vercel → StudyDesk backend → Settings → Environment Variables, add:
-   - `GEMINI_FILE_SEARCH_STORE` = the printed `fileSearchStores/...` value
-   - keep `GEMINI_API_KEY` configured
+### Easiest: GitHub Actions
+1. Open the StudyDesk GitHub repository → Settings → Secrets and variables → Actions.
+2. Create a **New repository secret** named `GEMINI_API_KEY`, using the Gemini API key already used by the Vercel backend. Never paste the key into a chat or commit it to the repository.
+3. Open the **Actions** tab → **Build StudyDesk RAG index** → **Run workflow**.
+4. Wait for the run to finish. In the run log, find the printed `fileSearchStores/...` store name. The workflow creates a new store and indexes the manifest PDFs.
+5. In Vercel → StudyDesk backend → Settings → Environment Variables, add `GEMINI_FILE_SEARCH_STORE` with that exact store name. Keep `GEMINI_API_KEY` configured.
 6. Redeploy the Vercel backend.
+
+### Alternative: run locally
+Use Node.js 18 or newer, set `GEMINI_API_KEY` in your terminal environment, then run `node scripts/ingest-rag.js` from the repository folder. The script prints the store name when it creates the store.
 
 To add/update the index later, run the script again with `GEMINI_FILE_SEARCH_STORE` set to the existing store name. The script currently adds documents; it does not delete existing documents.
 
