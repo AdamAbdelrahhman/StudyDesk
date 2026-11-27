@@ -203,6 +203,7 @@ body{perspective:none}
   </div>
  </div>
  <div class="panel"><div class="panel-head"><h2>مواد أولى ثانوي</h2><span class="muted">اختار المادة عشان تربطها بالمساعد الذكي</span></div><div class="curriculum-grid" id="curr-subjects"></div></div>
+ <div class="panel" id="curriculum-outline"><div class="panel-head"><h2>فهرس المنهج الموثّق</h2><span class="pill">قيد الإضافة</span></div><p class="muted">اختار مادة لعرض الوحدات والدروس التي تم التحقق من فهرسها. لن نضيف عناوين غير مؤكدة.</p></div>
  <div class="panel"><div class="panel-head"><h2>مساحة مذاكرة المادة</h2><span class="pill" id="curr-selected-subject">لم تختر مادة بعد</span></div><div class="field-grid"><div class="field"><label for="curr-unit">الوحدة</label><input id="curr-unit" placeholder="اكتب اسم الوحدة (اختياري)"></div><div class="field"><label for="curr-lesson">الدرس الحالي</label><input id="curr-lesson" placeholder="اكتب اسم الدرس (اختياري)"></div></div><div class="top-actions" style="margin-top:12px"><button class="btn primary" id="curr-ask-ai" type="button">ذاكر مع StudyDesk AI ✦</button><a class="btn" href="https://studentbooks.moe.gov.eg/Books" target="_blank" rel="noopener">مكتبة كتب الوزارة ↗</a></div><p class="muted" style="margin-bottom:0">اختيار المادة والدرس هنا يضيف سياقًا للمساعد الذكي. لن ننسب فهرسًا أو أسئلة للوزارة إلا بعد فحص الكتاب نفسه.</p></div>
  <div class="panel"><b>مصادر رسمية متاحة حاليًا</b><div class="curriculum-grid" style="margin-top:12px"><article class="curriculum-card"><strong>تقييمات التاريخ — الأسبوع 9</strong><small>أداءات وتقييمات الصف الأول الثانوي 2026–2027</small><a href="https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/ClassrHomeAssessmentsTest/History_Sec1_TR1_W9.pdf" target="_blank" rel="noopener">فتح ملف الوزارة ↗</a></article><article class="curriculum-card"><strong>تقييمات الرياضيات — الأسبوع 3</strong><small>أداءات وتقييمات الصف الأول الثانوي 2026–2027</small><a href="https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/ClassrHomeAssessmentsTest/Math_AR_Sec1_TR1_W3.pdf" target="_blank" rel="noopener">فتح ملف الوزارة ↗</a></article><article class="curriculum-card"><strong>تقييمات الإنجليزية — الأسبوع 10</strong><small>لغة أجنبية أولى · الصف الأول الثانوي 2026–2027</small><a href="https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/ClassrHomeAssessmentsTest/English_Sec1_TR1_W10.pdf" target="_blank" rel="noopener">فتح ملف الوزارة ↗</a></article></div><p class="muted" style="margin-bottom:0">دي ملفات تقييمات أسبوعية وليست بديلًا عن الكتب الدراسية أو فهرس المنهج الكامل.</p></div>
 </section>
@@ -240,6 +241,18 @@ function renderCurriculum(){
  const active=get('sd_curr_subject_'+me,'');
  host.innerHTML=subjects.map(([name,desc,tag])=>'<article class="curriculum-card"><span class="pill">'+tag+'</span><strong>'+name+'</strong><small>'+desc+'</small><button class="btn small '+(active===name?'primary':'')+'" type="button" data-curr-subject="'+esc(name)+'">اختيار المادة</button><a href="https://studentbooks.moe.gov.eg/Books" target="_blank" rel="noopener">فتح كتب الوزارة ↗</a></article>').join('');
  $('#curr-selected-subject').textContent=active||'لم تختر مادة بعد';
+ const outline=$('#curriculum-outline');
+ if(active==='التاريخ'){
+  const units=[
+   ['الوحدة الأولى: مدخل لدراسة حضارة مصر والعالم القديم',['الحضارة والتاريخ','مصادر دراسة الحضارات','عوامل قيام الحضارات']],
+   ['الوحدة الثانية: حضارة مصر القديمة (الفرعونية)',['ملامح من تاريخ مصر القديمة','الحياة الاقتصادية','الحياة السياسية والإدارية','الحياة الاجتماعية','الحياة الدينية','الحياة الثقافية والفكرية']],
+   ['الوحدة الثالثة: حضارة بلاد العراق القديم وحضارة فينيقيا',['حضارة بلاد العراق القديم','حضارة فينيقيا']],
+   ['الوحدة الرابعة: حضارة اليونان وحضارة الرومان',['الحضارة اليونانية (الإغريقية)','مصر تحت حكم البطالمة','الحضارة الرومانية','مصر تحت حكم الرومان']]
+  ];
+  outline.innerHTML='<div class="panel-head"><h2>فهرس التاريخ — مصر الحضارة</h2><span class="pill">15 درسًا · 2026–2027</span></div>'+units.map((u,i)=>'<div style="padding:12px 0;border-top:1px solid var(--line)"><b>'+u[0]+'</b><ol style="margin:8px 0 0;padding-inline-start:24px">'+u[1].map((lesson,j)=>'<li style="padding:3px 0">'+lesson+'</li>').join('')+'</ol></div>').join('')+'<small class="muted">الفهرس من بيانات الكتاب السنوي المرتبط ببوابة وزارة التربية والتعليم. راجع الكتاب نفسه قبل اعتماد شرح تفصيلي أو أسئلة.</small>';
+ }else{
+  outline.innerHTML='<div class="panel-head"><h2>فهرس المنهج الموثّق</h2><span class="pill">قيد التوثيق</span></div><p class="muted">لسه ما أضفناش فهرسًا متحققًا للمادة دي. افتح كتاب الوزارة من الرابط الرسمي، وبعد التحقق هنضيف الوحدات والدروس هنا.</p><a href="https://ellibrary.moe.gov.eg/Books-sec/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:800">مكتبة كتب المرحلة الثانوية الرسمية ↗</a>';
+ }
  $('#curr-unit').value=get('sd_curr_unit_'+me,'');
  $('#curr-lesson').value=get('sd_curr_lesson_'+me,'');
 }
