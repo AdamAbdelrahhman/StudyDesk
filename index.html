@@ -197,8 +197,8 @@ body{perspective:none}
 <section id="v-curriculum" hidden>
  <div class="page-head"><div><div class="eyebrow">EGYPTIAN NATIONAL CURRICULUM</div><h1>My curriculum</h1><p>موادك الدراسية حسب صفك الدراسي، مع روابط الكتب الرسمية.</p></div><span class="pill">2026–2027</span></div>
  <div class="panel">
-  <div class="panel-head"><h2>الصف الدراسي</h2><span class="pill" id="curr-grade">—</span></div>
-  <div class="field-grid">
+  <div class="panel-head"><h2>الصف الدراسي</h2><span class="pill" id="curr-grade">الصف الأول الثانوي</span></div>
+  <div class="field-grid"><div class="field"><label for="curr-grade-select">اختار صفك الدراسي</label><select id="curr-grade-select"><option value="secondary-1">أولى ثانوي</option><option value="secondary-2">تانية ثانوي</option><option value="secondary-3">تالتة ثانوي</option><option value="prep-1">أولى إعدادي</option><option value="prep-2">تانية إعدادي</option><option value="prep-3">تالتة إعدادي</option><option value="primary-1">أولى ابتدائي</option><option value="primary-2">تانية ابتدائي</option><option value="primary-3">تالتة ابتدائي</option><option value="primary-4">رابعة ابتدائي</option><option value="primary-5">خامسة ابتدائي</option><option value="primary-6">سادسة ابتدائي</option></select></div>
    <div class="field"><label for="curr-term">الفصل الدراسي</label><select id="curr-term"><option value="1">الترم الأول</option><option value="2" disabled>الترم الثاني — لم يتم توثيق كتبه هنا بعد</option></select></div>
    <div class="field"><label>مصدر المحتوى</label><div class="muted" style="padding:10px 0">الكتب الإلكترونية الرسمية لوزارة التربية والتعليم</div></div>
   </div>
@@ -233,7 +233,9 @@ $('#signin').onclick=()=>auth(false);$('#signup').onclick=()=>auth(true);$('#sho
 $('#out').onclick=()=>{put('sd_session',null);me=null;$('#app').hidden=true;$('#auth').hidden=false;$('#pw').value=''};
 $('#tabs').onclick=e=>{let b=e.target.closest('[data-v]');if(!b)return;view=b.dataset.v;render()};
 function renderCurriculum(){
- const grade=get('sd_grade_'+me,'');
+ const grade=get('sd_grade_'+me,'secondary-1')||'secondary-1';
+ put('sd_grade_'+me,grade);
+ $('#curr-grade-select').value=grade;
  const names={'secondary-1':'الصف الأول الثانوي','secondary-2':'الصف الثاني الثانوي','secondary-3':'الصف الثالث الثانوي','prep-1':'الصف الأول الإعدادي','prep-2':'الصف الثاني الإعدادي','prep-3':'الصف الثالث الإعدادي','primary-1':'الصف الأول الابتدائي','primary-2':'الصف الثاني الابتدائي','primary-3':'الصف الثالث الابتدائي','primary-4':'الصف الرابع الابتدائي','primary-5':'الصف الخامس الابتدائي','primary-6':'الصف السادس الابتدائي'};
  $('#curr-grade').textContent=names[grade]||'الصف غير محدد';
  const host=$('#curr-subjects');
@@ -272,6 +274,7 @@ function renderCurriculum(){
  $('#curr-unit').value=get('sd_curr_unit_'+me,'');
  $('#curr-lesson').value=get('sd_curr_lesson_'+me,'');
 }
+$('#curr-grade-select').addEventListener('change',e=>{put('sd_grade_'+me,e.target.value);put('sd_curr_subject_'+me,'');renderCurriculum()});
 $('#curr-subjects').addEventListener('click',e=>{const b=e.target.closest('[data-curr-subject]');if(!b)return;put('sd_curr_subject_'+me,b.dataset.currSubject);renderCurriculum()});
 ['curr-unit','curr-lesson'].forEach(id=>$('#'+id).addEventListener('change',()=>put(id==='curr-unit'?'sd_curr_unit_'+me:'sd_curr_lesson_'+me,$('#'+id).value.trim())));
 $('#curr-ask-ai').addEventListener('click',()=>{const sub=get('sd_curr_subject_'+me,'');if(!sub){alertUser('اختار مادة','اختار المادة الأول عشان المساعد يعرف هتذاكر إيه.');return}put('sd_curr_unit_'+me,$('#curr-unit').value.trim());put('sd_curr_lesson_'+me,$('#curr-lesson').value.trim());aiOpen();aiInput.value='اشرح لي '+(get('sd_curr_unit_'+me,'')?'وحدة '+get('sd_curr_unit_'+me,'')+' في ':'')+(get('sd_curr_lesson_'+me,'')?'درس '+get('sd_curr_lesson_'+me,'')+' في ':'')+sub+'، وميّز بوضوح بين المعلومات المؤكدة من مصدر المنهج وأي توضيح إضافي.';aiForm.requestSubmit();});
