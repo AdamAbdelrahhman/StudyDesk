@@ -47,7 +47,7 @@ body{perspective:1200px;overflow-x:hidden}
 .geo.ball{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff9,#8b5cf6aa 18%,#31205e 70%);box-shadow:inset -10px -12px 22px #09081799,0 0 35px #8b5cf655;animation:gravity-ball 11s cubic-bezier(.45,0,.55,1) infinite}
 .geo.grid{width:170px;height:170px;background:linear-gradient(#8b5cf633 1px,transparent 1px),linear-gradient(90deg,#8b5cf633 1px,transparent 1px);background-size:18px 18px;mask-image:radial-gradient(circle,black,transparent 70%);animation:grid-float 16s ease-in-out infinite}
 .g1{left:5%;top:13%}.g2{right:8%;top:18%;animation-delay:-4s!important}.g3{left:14%;bottom:12%;animation-delay:-7s!important}.g4{right:18%;bottom:9%;animation-delay:-2s!important}.g5{left:52%;top:5%;animation-delay:-9s!important}.g6{right:42%;bottom:5%;animation-delay:-5s!important}
-.app-shell,.auth-card{transform-style:preserve-3d;animation:enter-lift .9s cubic-bezier(.2,.8,.2,1) both}
+.app-shell{transform-style:preserve-3d;animation:enter-fade .9s cubic-bezier(.2,.8,.2,1) both}.auth-card{transform-style:preserve-3d;animation:enter-lift .9s cubic-bezier(.2,.8,.2,1) both}
 .panel,.stat,.topbar,.sidebar,.auth-card{transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .45s}
 .panel:hover,.stat:hover{transform:translateY(-5px) rotateX(1.2deg);border-color:#8b5cf677;box-shadow:0 25px 65px #0007,0 0 24px #8b5cf61a}
 .brand-mark{animation:brand-pulse 3s ease-in-out infinite;transform-style:preserve-3d}
@@ -64,6 +64,7 @@ body{perspective:1200px;overflow-x:hidden}
 @keyframes diamond-drift{0%,100%{translate:0 0;rotate:0deg}50%{translate:-18px -25px;rotate:100deg}}
 @keyframes gravity-ball{0%,100%{transform:translate3d(0,0,0) scale(1)}35%{transform:translate3d(18px,-38px,50px) scale(1.08)}70%{transform:translate3d(-12px,12px,-15px) scale(.94)}}
 @keyframes grid-float{0%,100%{transform:rotateX(55deg) rotateZ(-12deg) translateY(0)}50%{transform:rotateX(55deg) rotateZ(2deg) translateY(-22px)}}
+@keyframes enter-fade{from{opacity:0}to{opacity:1}}
 @keyframes enter-lift{from{opacity:0;transform:translateY(18px) rotateX(2deg)}to{opacity:1;transform:translateY(0) rotateX(0)}}
 @keyframes brand-pulse{0%,100%{box-shadow:0 8px 25px #8b5cf655;transform:rotateY(0)}50%{box-shadow:0 8px 35px #d946ef88;transform:rotateY(18deg)}}
 @keyframes number-pop{from{opacity:.3;transform:translateY(8px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
