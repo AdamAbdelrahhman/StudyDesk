@@ -335,7 +335,7 @@ function renderCurriculum(){
  const unitSelect=$('#curr-unit'),lessonSelect=$('#curr-lesson');
  const savedUnit=get(unitKey,''),savedLesson=get(lessonKey,'');
  unitSelect.innerHTML='<option value="">اختار الوحدة</option>'+(data?data.units.map(u=>'<option value="'+esc(u[0])+'">'+esc(u[0])+'</option>').join(''):'');
- unitSelect.disabled=!data;
+ unitSelect.disabled=!data||!data.units.length;
  unitSelect.value=data&&data.units.some(u=>u[0]===savedUnit)?savedUnit:'';
  const fillCurrLessons=()=>{
   const unit=data&&data.units.find(u=>u[0]===unitSelect.value);
@@ -349,7 +349,7 @@ function renderCurriculum(){
  lessonSelect.onchange=()=>put(lessonKey,lessonSelect.value);
  if(data){
   const count=data.units.reduce((n,u)=>n+u[1].length,0);
-  outline.innerHTML='<div class="panel-head"><h2>فهرس '+data.title+'</h2><span class="pill">'+count+' درسًا · 2026–2027</span></div>'+data.units.map(u=>'<div style="padding:12px 0;border-top:1px solid var(--line)"><b>'+u[0]+'</b><ol style="margin:8px 0 0;padding-inline-start:24px">'+u[1].map(lesson=>'<li style="padding:3px 0">'+lesson+'</li>').join('')+'</ol></div>').join('')+'<a class="btn primary" style="display:inline-block;text-decoration:none;margin-top:10px" href="'+data.book+'" target="_blank" rel="noopener">فتح كتاب الوزارة PDF ↗</a><p class="muted">الفهرس من بيانات الكتاب الدراسي 2026–2027 المرتبط ببوابة الوزارة. استخدم ملف الكتاب لمراجعة التفاصيل قبل المذاكرة.</p>';
+  outline.innerHTML='<div class="panel-head"><h2>فهرس '+data.title+'</h2><span class="pill">'+(count?count+' درسًا · 2026–2027':'الفهرس قيد الإضافة')+'</span></div>'+(count?data.units.map(u=>'<div style="padding:12px 0;border-top:1px solid var(--line)"><b>'+u[0]+'</b><ol style="margin:8px 0 0;padding-inline-start:24px">'+u[1].map(lesson=>'<li style="padding:3px 0">'+lesson+'</li>').join('')+'</ol></div>').join(''):'<p class="muted">رابط كتاب الوزارة متاح، لكن لم نضف فهرس الوحدات بعد. استخدم الكتاب نفسه للتأكد من الدروس.</p>')+'<a class="btn primary" style="display:inline-block;text-decoration:none;margin-top:10px" href="'+data.book+'" target="_blank" rel="noopener">فتح كتاب الوزارة PDF ↗</a><p class="muted">الفهرس من بيانات الكتاب الدراسي 2026–2027 المرتبط ببوابة الوزارة. استخدم ملف الكتاب لمراجعة التفاصيل قبل المذاكرة.</p>';
  }else{
   outline.innerHTML='<div class="panel-head"><h2>فهرس المنهج الموثّق</h2><span class="pill">قيد التوثيق</span></div><p class="muted">لسه ما أضفناش فهرسًا متحققًا للمادة دي. افتح كتاب الوزارة من الرابط الرسمي، وبعد التحقق هنضيف الوحدات والدروس هنا.</p><a href="https://ellibrary.moe.gov.eg/Books-sec/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:800">مكتبة كتب المرحلة الثانوية الرسمية ↗</a>';
  }
