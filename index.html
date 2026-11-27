@@ -240,7 +240,7 @@ function renderCurriculum(){
  $('#curr-grade').textContent=names[grade]||'الصف غير محدد';
  const host=$('#curr-subjects');
  if(grade!=='secondary-1'){host.innerHTML='<div class="empty" style="grid-column:1/-1">المحتوى المنظم المتاح حاليًا هو نموذج أولى ثانوي. هنضيف باقي الصفوف بعد توثيق كتب كل صف.</div>';return}
- const subjects=[['اللغة العربية','كتاب الطالب + القصة + القواعد الأساسية للنحو والصرف','عربي'],['اللغة الإنجليزية','اللغة الأجنبية الأولى','English'],['الرياضيات','النسخة العربية أو الإنجليزية أو الفرنسية حسب مدرستك','رياضيات'],['العلوم المتكاملة','النسخة العربية أو الإنجليزية أو الفرنسية','علوم'],['الفلسفة والمنطق','كتاب المادة','فلسفة'],['التاريخ','مصر الحضارة: حضارة مصر والعالم القديم','تاريخ'],['البرمجة والذكاء الاصطناعي','النسخة العربية أو الإنجليزية','برمجة'],['التربية الدينية الإسلامية','كتاب التربية الدينية الإسلامية للترم الأول','دين إسلامي'],['التربية الدينية المسيحية','كتاب التربية الدينية المسيحية للترم الأول','دين مسيحي'],['اللغة الأجنبية الثانية','ألماني أو إسباني أو إيطالي أو فرنسي','لغات']];
+ const subjects=[['اللغة العربية','كتاب الطالب + القصة + القواعد الأساسية للنحو والصرف','عربي'],['اللغة الإنجليزية','اللغة الأجنبية الأولى','English'],['الرياضيات','النسخة العربية أو الإنجليزية أو الفرنسية حسب مدرستك','رياضيات'],['العلوم المتكاملة','النسخة العربية أو الإنجليزية أو الفرنسية','علوم'],['الفلسفة والمنطق','كتاب المادة','فلسفة'],['التاريخ','مصر الحضارة: حضارة مصر والعالم القديم','تاريخ'],['البرمجة والذكاء الاصطناعي','النسخة العربية أو الإنجليزية','برمجة'],['التربية الدينية الإسلامية','كتاب التربية الدينية الإسلامية للترم الأول','دين إسلامي'],['التربية الدينية المسيحية','كتاب التربية الدينية المسيحية للترم الأول','دين مسيحي'],['اللغة الإنجليزية (لغة أجنبية ثانية)','كتاب اللغة الإنجليزية كلغة ثانية','English 2'],['اللغة الفرنسية (لغة أجنبية ثانية)','كتاب اللغة الفرنسية كلغة ثانية','Français 2'],['اللغة الإسبانية (لغة أجنبية ثانية)','كتاب اللغة الإسبانية كلغة ثانية','Español'],['اللغة الألمانية (لغة أجنبية ثانية)','كتاب اللغة الألمانية كلغة ثانية','Deutsch'],['اللغة الإيطالية (لغة أجنبية ثانية)','كتاب اللغة الإيطالية كلغة ثانية','Italiano'],['قصة أبو الفوارس عنترة','قصة اللغة العربية المقررة','القصة'],['القواعد الأساسية للنحو والصرف','مرجع الوزارة العام للمرحلة الثانوية — راجع توزيع مدرسك','نحو وصرف']];
  const active=get('sd_curr_subject_'+me,'');
  host.innerHTML=subjects.map(([name,desc,tag])=>'<article class="curriculum-card"><span class="pill">'+tag+'</span><strong>'+name+'</strong><small>'+desc+'</small><button class="btn small '+(active===name?'primary':'')+'" type="button" data-curr-subject="'+esc(name)+'">اختيار المادة</button><a href="https://studentbooks.moe.gov.eg/Books" target="_blank" rel="noopener">فتح كتب الوزارة ↗</a></article>').join('');
  $('#curr-selected-subject').textContent=active||'لم تختر مادة بعد';
@@ -258,6 +258,40 @@ function renderCurriculum(){
  ['الوحدة الأولى: قيم عربية',['مكارم الأخلاق وحاتم الطائي (قراءة)','شباب تسامى للعلا وكهول (شعر) — للسموأل','قيم الحياة الزوجية (نثر) — لأمامة بنت الحارث']],
  ['الوحدة الثانية: التسامح والسلام',['قيم اجتماعية (قراءة) — شوقي ضيف','العفو مأمول (شعر) — كعب بن زهير','من أجل حياة كريمة (نص قرآني — سورة الأنعام 151–152)']],
  ['الوحدة الثالثة: العلم والأخلاق',['تكنولوجيا المعلومات (قراءة) — د. نبيل علي','ابدأ بنفسك (شعر) — أبو الأسود الدؤلي','آداب صناعة الكُتّاب (نثر) — عبد الحميد بن يحيى الكاتب']]]},
+ 'قصة أبو الفوارس عنترة':{title:'قصة أبو الفوارس عنترة بن شداد',book:'https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/StudentBook/Arabic_language_STORY_Sec1_Tr1.pdf',units:[
+ ['قصة أبو الفوارس عنترة بن شداد',['مغنى القافلة','البطل الثائر','الطريق إلى الحقيقة','حوار ساخن','خطبة عبلة','البطل الحر','انتصار','علاقة قلقة','رحيل عبلة','حياة الغرباء','الفارس النبيل','المهر الغالي','رحلة المخاطر','إقامة كريمة','عودة إلى الديار','خاتمة سعيدة']]]},
+ 'اللغة الإنجليزية (لغة أجنبية ثانية)':{title:'English as a Second Foreign Language',book:'https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/StudentBook/English_second_language_secondary1.pdf',units:[
+ ['Unit 1 — Back to School',['Who am I?','About Me','My Classroom and Me','About Me Post']],
+ ['Unit 2 — Daily Routine and Healthy Life',['My Daily Routine','Technology in my Day']],
+ ['Unit 3 — My Time at School',['My Time at School']],
+ ['Review 1',['Review 1']]]},
+ 'اللغة الفرنسية (لغة أجنبية ثانية)':{title:'Français — langue étrangère seconde',book:'https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/StudentBook/Une_deuxieme_langue_francaise_Sec1_Tr1.pdf',units:[
+ ['Unit 1',['Le Club de ma classe']],
+ ['Unit 2',['Le Club des artistes']],
+ ['Unit 3',['Le Club des lecteurs']],
+ ['Unit 4',['Le Club des athlètes']]]},
+ 'اللغة الإيطالية (لغة أجنبية ثانية)':{title:'Italiano — seconda lingua straniera',book:'https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/StudentBook/Italiano_language_Sec1_Tr1.pdf',units:[
+ ['Unit 1',['Benvenuti!']],
+ ['Unit 2',['Il ragazzo o la ragazza?']],
+ ['Unit 3',['A scuola']],
+ ['Unit 4',['Di dove sei?']],
+ ['Unit 5',['Tempo libero']],
+ ['Unit 6',['Perché non venite a casa mia?']]]},
+ 'اللغة الإسبانية (لغة أجنبية ثانية)':{title:'Español — segunda lengua extranjera',book:'https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/StudentBook/Espanol_language_Sec1_Tr1.pdf',units:[]},
+ 'اللغة الألمانية (لغة أجنبية ثانية)':{title:'Deutsch — zweite Fremdsprache',book:'https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/StudentBook/Deutschl_anguage_Sec1_Tr1.pdf',units:[]},
+ 'القواعد الأساسية للنحو والصرف':{title:'القواعد الأساسية للنحو والصرف — مرجع المرحلة الثانوية',book:'https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/StudentBook/naho_general_TR1_1sec.pdf',units:[
+ ['الوحدة الأولى: الكلمة وأقسامها',['الكلام المفيد وأجزاؤه وأقسام الكلمة','علامات الاسم','علامات الفعل','علامات الحرف']],
+ ['الوحدة الثانية: الاسم وأقسامه',['الاسم: مذكر أو مؤنث','الاسم: مفرد — مثنى — جمع','الاسم: نكرة — معرفة','الاسم: مقصور — منقوص — ممدود']],
+ ['الوحدة الثالثة: الفعل وأقسامه',['أقسام الفعل من حيث الزمن','أقسام الفعل من حيث بنيته','أقسام الفعل من حيث تصرفه','أقسام الفعل من حيث معموله وتركيبه','اسم الفعل']],
+ ['الوحدة الرابعة: المعرب والمبني من الأسماء والأفعال',['المعرب والمبني من الأسماء','الأسماء الخمسة وإعرابها','الممنوع من الصرف','المعرب والمبني من الأفعال','الأفعال الخمسة وإعرابها']],
+ ['الوحدة الخامسة: مرفوعات الأسماء',['المبتدأ والخبر','كان وأخواتها','أفعال المقاربة والرجاء والشروع','إن وأخواتها','لا النافية للجنس','الفاعل','نائب الفاعل']],
+ ['الوحدة السادسة: منصوبات الأسماء',['المفعول به','المفعول المطلق','المفعول لأجله','المفعول معه','ظرفا الزمان والمكان','الحال','الاستثناء','المنادى','التمييز']],
+ ['الوحدة السابعة: مجرورات الأسماء',['المجرور بحرف الجر','المجرور بالإضافة']],
+ ['الوحدة الثامنة: التوابع',['النعت','العطف','التوكيد','البدل']],
+ ['الوحدة التاسعة: الأساليب',['أسلوب الشرط','أسلوب القسم','أسلوب المدح والذم','أسلوب التعجب','أسلوب الإغراء والتحذير','أسلوب الاختصاص','أسلوب الاستفهام']],
+ ['الوحدة العاشرة: الجمل',['الجمل التي لها محل من الإعراب','الجمل التي لا محل لها من الإعراب']],
+ ['الوحدة الحادية عشرة: الميزان الصرفي والمشتقات',['الميزان الصرفي','الكشف في المعاجم','إسناد الأفعال إلى الضمائر','المصدر وصوغه','المشتقات']],
+ ['الوحدة الثانية عشرة: همزتا الوصل والقطع',['همزتا الوصل والقطع','علامات الترقيم']]]},
  'الفلسفة والمنطق':{title:'الفلسفة والمنطق',book:'https://elearnningcontent.blob.core.windows.net/elearnningcontent/2026_2027/Secondry/Secondry1/Term1/StudentBook/Philosophy_and_Logic_Tr1_1sec.pdf',units:[
  ['الوحدة الأولى: الفلسفة',['التفكير الإنساني','الفلسفة وطبيعة الموقف الفلسفي']],
  ['الوحدة الثانية: المنطق',['مبادئ المنطق (الحدود — القضايا)','الاستدلال (تعريفه — أنواعه)']]]},
@@ -334,7 +368,7 @@ function editTask(id){let t=D.tasks.find(x=>x.id===id);if(!t)return;editId=id;$(
 $('#add').onclick=()=>{let title=$('#tt').value.trim();if(!title){$('#tt').focus();return}let dv=$('#td').value,o={title,subject:$('#ts').value||'General',due:dv?new Date(dv).getTime():0,lead:+$('#tl').value,pri:+$('#tp').value,rep:$('#tr').value,notes:$('#tn').value.trim()};if(editId){Object.assign(D.tasks.find(t=>t.id===editId),o,{fired:0,snz:0});editId=0;$('#add').textContent='＋ Add task'}else D.tasks.push({id:Date.now(),done:0,fired:0,subs:[],...o});['tt','ts','td','tn'].forEach(id=>$('#'+id).value='');$('#tl').value='0';$('#tp').value='2';$('#tr').value='';save();render()};
 function taskHTML(t){let late=!t.done&&t.due&&t.due<Date.now(),pri=t.pri||2;return `<div class="task ${t.done?'done':''}"><input type="checkbox" data-done="${t.id}" ${t.done?'checked':''}><div class="task-main"><div class="task-title">${esc(t.title)}</div><div class="task-meta"><span class="pill">${esc(t.subject||'General')}</span><span class="priority-${pri===1?'high':pri===3?'low':'mid'}">${['','High','Medium','Low'][pri]}</span>${t.rep?`<span class="pill">${t.rep==='d'?'Daily':'Weekly'}</span>`:''}<span class="${late?'priority-high':''}">${t.due?new Date(t.due).toLocaleString():'No due date'}</span></div>${t.notes?`<div class="muted">${esc(t.notes)}</div>`:''}${(t.subs||[]).map((s,i)=>`<label class="task-meta"><input type="checkbox" data-sub="${t.id}:${i}" ${s.d?'checked':''} style="width:auto">${esc(s.t)}</label>`).join('')}<input data-subadd="${t.id}" placeholder="Add a subtask and press Enter" style="margin-top:7px;padding:7px 9px;font-size:12px"></div><div class="task-actions"><button class="btn small" data-e="${t.id}">Edit</button><button class="btn small danger" data-x="${t.id}">×</button></div></div>`}
 const sorted=()=>[...D.tasks].sort((a,b)=>a.done-b.done||(a.due||9e15)-(b.due||9e15));
-const CORE_SUBJECTS=['اللغة العربية','اللغة الإنجليزية','الرياضيات','العلوم المتكاملة','الفلسفة والمنطق','التاريخ','البرمجة والذكاء الاصطناعي','التربية الدينية الإسلامية','التربية الدينية المسيحية','اللغة الأجنبية الثانية'];
+const CORE_SUBJECTS=['اللغة العربية','اللغة الإنجليزية','الرياضيات','العلوم المتكاملة','الفلسفة والمنطق','التاريخ','البرمجة والذكاء الاصطناعي','التربية الدينية الإسلامية','التربية الدينية المسيحية','اللغة الإنجليزية (لغة أجنبية ثانية)','اللغة الفرنسية (لغة أجنبية ثانية)','اللغة الإسبانية (لغة أجنبية ثانية)','اللغة الألمانية (لغة أجنبية ثانية)','اللغة الإيطالية (لغة أجنبية ثانية)','قصة أبو الفوارس عنترة','القواعد الأساسية للنحو والصرف'];
 function allSubs(){return [...new Set([...CORE_SUBJECTS,...D.tasks.map(t=>t.subject),...D.cards.map(c=>c.subject),...Object.keys(D.notes)])].filter(Boolean)}
 function streak(){let n=0,d=Date.now();if((D.focus[key(d)]||0)<D.goal)d-=864e5;while((D.focus[key(d)]||0)>=D.goal&&n<365){n++;d-=864e5}return n}
 function render(){if(!me)return;D.cards||=[];D.exams||=[];D.notes||={};D.focus||={};D.goal||=60;document.querySelectorAll('#tabs [data-v]').forEach(b=>b.classList.toggle('active',b.dataset.v===view));['tasks','cal','stats','focus','cards','exams','notes','curriculum'].forEach(v=>$('#v-'+v).hidden=v!==view);
