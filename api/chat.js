@@ -38,8 +38,11 @@ module.exports=async function handler(req,res){
   if(upstream.status===429||upstream.status===503)upstream=await requestModel('gemini-3.5-flash-lite');
   const result=await upstream.json();
   if(!upstream.ok){const msg=result.error&&result.error.message?result.error.message:'Gemini request failed.';return send(res,upstream.status===429?429:502,{error:msg});}
-  const reply=(result.steps||[]).filter(step=>step.type==='model_output').flatMap(step=>step.content||[]).filter(part=>part.type==='text').map(part=>part.text||'').join('').trim();
-  if(!reply)return send(res,502,{error:'Gemini did not return a text response.'});
+  if(result.status&&result.status!=='completed')return send(res,502,{error:'Gemini interaction status: '+result.status+(result.error&&result.error.message?' — '+result.error.message:'')});
+  const steps=Array.isArray(result.steps)?result.steps:(Array.isArray(result.outputs)?result.outputs:[]);
+  const modelSteps=steps.filter(step=>step&&(['model_output','text'].includes(step.type)));
+  const reply=modelSteps.flatMap(step=>Array.isArray(step.content)?step.content:[]).filter(part=>part&&part.type==='text').map(part=>part.text||'').join('').trim() || (typeof result.output_text==='string'?result.output_text.trim():'');
+  if(!reply)return send(res,502,{error:'Gemini returned no quiz text. Check the Vercel function logs for the upstream response.'});
   return send(res,200,{reply});
  }catch(err){return send(res,500,{error:'Unable to process this request. Please try again.'});}
 };
